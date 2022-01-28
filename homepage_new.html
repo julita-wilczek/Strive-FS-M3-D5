@@ -996,6 +996,18 @@
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
     crossorigin="anonymous"></script>
     <script>
+
+/*
+Here is some code to use to attach anchor tags:
+
+For artist
+<a href="./artist.html?artistId=${HERE YOU ADD PROPER CODE FOR YOU DATA}">
+for example newObj.artist.id
+For album
+<a href="./album.html?albumId="${HERE YOU ADD PROPER CODE FOR YOU DATA}">"
+for example newObj.album.id
+
+*/
         const fetchData = () => {
   const row = document.querySelector(".hello-content");
   for (let i = 0; i < row.children.length; i++) {

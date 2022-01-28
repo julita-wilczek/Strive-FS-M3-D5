@@ -516,13 +516,29 @@
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
     crossorigin="anonymous"></script>
     <script>
-      fetch("https://striveschool-api.herokuapp.com/api/deezer/search?q=eminem", {
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
-		"x-rapidapi-key": "a91386478dmsh26d5ec919787d88p121f11jsnadc153cc2fea"
-	}
-})
+
+
+
+/* URL PARAMS:
+To each artist and album name attach link for external page.
+For artist it will look like this
+https://striveschool-api.herokuapp.com/api/deezer/artist/412
+
+Album:
+https://striveschool-api.herokuapp.com/api/deezer/album/75621062
+
+What you fetch for artist:
+artist
+https://striveschool-api.herokuapp.com/api/deezer/artist/"+id.get("artistId")
+
+*/
+
+
+// THIS IS IMPORTANT, KEEP IT!
+let id = new URLSearchParams(window.location.search)
+
+      fetch("https://striveschool-api.herokuapp.com/api/deezer/search?q=queen", {
+	"method": "GET"})
 .then(response => response.json())
 .then(database => {
 	console.log(database);
