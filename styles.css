@@ -1271,7 +1271,11 @@ width: 100%;
 
     background-attachment:scroll;
   }
-
+    .queen a {
+        color: var(--spotify-white);
+        opacity: 0.5;
+        text-decoration: none;
+    }
     .queen:hover{
         text-decoration: underline;
         cursor: pointer;
