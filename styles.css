@@ -412,6 +412,8 @@ cursor: pointer;
     font-weight: bold;
     color: var(--spotify-white);
     margin-bottom: 0;
+    max-width: 200px;
+    text-overflow: ellipsis;
     /* white-space: nowrap; */
 }
 .hello-card:hover{
