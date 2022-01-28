@@ -701,21 +701,36 @@
         console.log(database);
         let songContainer = document.querySelector('#songContainer')
         songContainer.innerHTML = ''
-        database.tracks.data.forEach((element) => {
+        database.tracks.data.forEach((element, i) => {
           let newDiv = document.createElement('div')
           songContainer.appendChild(newDiv)
+          //to convert the duration in second to minutes:seconds
+          function timeFormat(duration) {
+            // Hours, minutes and seconds
+            var hrs = ~~(duration / 3600);
+            var mins = ~~((duration % 3600) / 60);
+            var secs = ~~duration % 60;
+            // Output like "1:01" or "4:03:59" or "123:03:59"
+            var ret = "";
+            if (hrs > 0) {
+              ret += "" + hrs + "hr :" + (mins < 10 ? "0" : "");
+            }
+            ret += "" + mins + "min :" + (secs < 10 ? "0" : "");
+            ret += "" + secs;
+            return ret;
+          }
           const songCard = `
                   <div class="d-flex justify-content-between card-song-al">
                     <div class="d-flex" style="align-items: center;">
-                      <div class="number-al-song">16</div>
+                      <div class="number-al-song">${i + 1}</div>
                       <div class="arrow"></div>
                       <div>
-                        <div class="song-album-title" style="font-size:14px;">${database.tracks.data.title}</div>
-                        <div class="queen" style="font-size:10px;"><a href="./artist.html?artistId=${database.artist}">${artist.name}</a></div>
+                        <div class="song-album-title" style="font-size:14px;">${element.title}</div>
+                        <div class="queen" style="font-size:10px;"><a href="./artist.html?artistId=${element.artist.id}">${element.artist.name}</a></div>
                       </div>
                     </div>
                     <div class="d-flex"><i class="bi bi-heart heart-al-song"></i>
-                      <div class="time-song-al"></div>
+                      <div class="time-song-al">${timeFormat(element.duration)}</div>
                       <i class="bi bi-three-dots dots-al-song"></i>
                     </div>
                   </div>
@@ -723,8 +738,28 @@
                     `
           console.log(songCard)
           newDiv.innerHTML += songCard
+          let albumTopContainer = document.querySelector('.album-cover')
+          albumTopContainer.innerHTML = ''
+          let newDivTop = document.createElement('div')
+          albumTopContainer.appendChild(newDivTop)
+          const albumTopCard = `
+        <div class="d-flex album-cover ">
+                <img class="album-image" src="${database.cover_medium}" alt="">
+                <div class="d-flex flex-column album-text">
+                  <div class="album-details">ALBUM</div>
+                  <h3>${database.title}</h3>
+                  <div class="d-flex album-details ">
+                    <i class="bi bi-person-circle"></i>
+                    <div class="queen2"><img src=''>Queen </div>
+                    <div id="album-infos">﹒${database.release_date}﹒${database.tracks.data.length} song ${timeFormat(database.duration)}</div>
+                  </div>
+                </div>
+              </div>
+        
+        `
+          newDivTop.innerHTML = albumTopCard
         })
-
+        //this is the top part of the album page
 
 
         // HERE YOU ADD CODE TO GENERATE ITEMS DYNAMICALLY.
