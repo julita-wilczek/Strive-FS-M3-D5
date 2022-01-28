@@ -9,7 +9,7 @@
 
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-  <script src="main.js" defer></script>
+  <!--<script src="main.js" defer></script>-->
   <title>Spotify - Artist</title>
   <link rel="shortcut icon" href="/media/favicon.png" type="image/x-icon">
 
@@ -527,6 +527,7 @@ https://striveschool-api.herokuapp.com/api/deezer/artist/412
 Album:
 https://striveschool-api.herokuapp.com/api/deezer/album/75621062
 
+
 What you fetch for artist:
 artist
 https://striveschool-api.herokuapp.com/api/deezer/artist/"+id.get("artistId")
@@ -537,18 +538,33 @@ https://striveschool-api.herokuapp.com/api/deezer/artist/"+id.get("artistId")
 // THIS IS IMPORTANT, KEEP IT!
 let id = new URLSearchParams(window.location.search)
 
-      fetch("https://striveschool-api.herokuapp.com/api/deezer/search?q=queen", {
+fetch("https://striveschool-api.herokuapp.com/api/deezer/artist/412", {
 	"method": "GET"})
 .then(response => response.json())
-.then(database => {
-	console.log(database);
+.then(artist => {
+	console.log(artist);
   let artistHeader = document.querySelector(".header-container h1")
-  artistHeader.innerText = database.data[0].artist.name
+  artistHeader.innerText = artist.name
+  let monthlyListeners = document.querySelector(".header-container p")
+  monthlyListeners.innerText = artist.nb_fan.toLocaleString() + " Monthly Listeners"
 
   let artistPictureDiv = document.querySelector(".artist-title-container")
-  artistPictureDiv.style.backgroundImage = `url(${database.data[0].artist.picture_big})`;
+  artistPictureDiv.style.backgroundImage = `url(${artist.picture_big})`;
+})
+  .catch(err => {
+	console.error(err)
+});
 
-  let artistPick = document.querySelector(".artist-pick")
+fetch("https://striveschool-api.herokuapp.com/api/deezer/artist/412", {
+	"method": "GET"})
+.then(response => response.json())
+.then(artist => 
+  fetch("https://striveschool-api.herokuapp.com/api/deezer/search?q="+artist.name, {
+	"method": "GET"}))
+  .then(response => response.json())
+  .then(database => {
+    console.log(database)
+    let artistPick = document.querySelector(".artist-pick")
   artistPick.innerHTML = 
   `
   <div class="px-4 px-lg-0 pick-details d-flex">
@@ -574,12 +590,12 @@ let id = new URLSearchParams(window.location.search)
                                     
   <div class="d-flex align-items-center">
       <div class="number">${i+1}</div>
-      <img src=${songs[i].album.cover} alt="" width="50px">
-      <div class="song">${songs[i].title_short}</div>
+      <a href="./album.html?albumId=${songs[i].album.id}"><img src=${songs[i].album.cover} class="me-2" width="50px"></a>
+      <div class="song" title="${songs[i].title}">${songs[i].title_short}</div>
   </div>
 
   <div class="more-details d-flex align-items-center justify-content-between">
-      <div class="listen d-none d-md-block">487,413,495</div>
+      <div class="listen d-none d-md-block">${songs[i].rank.toLocaleString()}</div>
       <div class="duration d-none d-lg-block">${countMin(songs[i].duration)}</div>
   </div>
   
@@ -589,19 +605,19 @@ let id = new URLSearchParams(window.location.search)
   popularSection.appendChild(popularContentCard)
  }
 
- for (let i = 5; i < songs.length; i++) {
+ for (let i = 5; i < 18; i++) {
   let popularContentCard = document.createElement("div")
   popularContentCard.classList = "ps-4 ps-4 popular-content-card d-flex justify-content-between"
   popularContentCard.innerHTML = `<div class="d-flex align-items-center justify-content-between w-100">
                                     
   <div class="d-flex align-items-center">
-      <div class="number">${i-5}</div>
-      <img src=${songs[i].album.cover} alt="" width="50px">
-      <div class="song">${songs[i].title_short}</div>
+      <div class="number">${i-4}</div>
+      <a href="./album.html?albumId=${songs[i].album.id}"><img src=${songs[i].album.cover} class="me-2" title="${songs[i].album.title}" alt="Album cover for ${songs[i].album.title}" style="width:50px"></a>
+      <div class="song" title="${songs[i].title}">${songs[i].title_short}</div>
   </div>
 
   <div class="more-details d-flex align-items-center justify-content-between">
-      <div class="listen d-none d-md-block">487,413,495</div>
+      <div class="listen d-none d-md-block">${songs[i].rank.toLocaleString()}</div>
       <div class="duration d-none d-lg-block">${countMin(songs[i].duration)}</div>
   </div>
   
@@ -609,11 +625,11 @@ let id = new URLSearchParams(window.location.search)
 
 <div class="more-details-icon d-flex align-items-center"><i class="bi bi-three-dots-vertical d-lg-none"></i></div>`;
   allSongs.appendChild(popularContentCard)
+  
  }
-  
-  
+  })
 
-})
+
 .catch(err => {
 	console.error(err)
 });
