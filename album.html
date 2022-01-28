@@ -753,7 +753,7 @@
                   <h3>${database.title}</h3>
                   <div class="d-flex album-details ">
                     <i class="bi bi-person-circle"></i>
-                    <div class="queen2"><img src=''>${database.contributors.name} </div>
+                    <div class="queen2"><img src=''>${database.contributors[0].name} </div>
                     <div id="album-infos">﹒${database.release_date}﹒${database.tracks.data.length} songs ${timeFormat(database.duration)}</div>
                   </div>
                 </div>
