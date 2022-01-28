@@ -538,7 +538,7 @@ https://striveschool-api.herokuapp.com/api/deezer/artist/"+id.get("artistId")
 // THIS IS IMPORTANT, KEEP IT!
 let id = new URLSearchParams(window.location.search)
 
-fetch("https://striveschool-api.herokuapp.com/api/deezer/artist/412", {
+fetch("https://striveschool-api.herokuapp.com/api/deezer/artist/"+id.get("artistId"), {
 	"method": "GET"})
 .then(response => response.json())
 .then(artist => {
