@@ -693,7 +693,7 @@
     // THIS IS IMPORTANT, KEEP IT!
     let id = new URLSearchParams(window.location.search)
 
-    fetch("https://striveschool-api.herokuapp.com/api/deezer/album/75621062", {
+    fetch("https://striveschool-api.herokuapp.com/api/deezer/album/1121401", {
       "method": "GET"
     })
       .then(response => response.json())
@@ -715,7 +715,7 @@
             if (hrs > 0) {
               ret += "" + hrs + "hr :" + (mins < 10 ? "0" : "");
             }
-            ret += "" + mins + "min :" + (secs < 10 ? "0" : "");
+            ret += "" + mins + ":" + (secs < 10 ? "0" : "");
             ret += "" + secs;
             return ret;
           }
