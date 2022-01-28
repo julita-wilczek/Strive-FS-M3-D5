@@ -9,29 +9,14 @@
 
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-  <!-- <script src="main.js" defer></script> -->
+  <script src="main.js" defer></script>
   <title>Spotify</title>
   <link rel="shortcut icon" href="/media/favicon.png" type="image/x-icon">
+  <script src="main.js" defer></script>
 
 </head>
 
 <body>
-    <div class="modal fade" id="albumModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="albumModalLabel">Song List</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
-      </div>
-    </div>
-  </div>
-    </div>
 
 
 
@@ -219,27 +204,23 @@
                       <a class="nav-link text-center position-relative" href="/artist.html"><i class="bi bi-chevron-right" ></i></a>
                     </li>
                   </ul>
-
-                
                   
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <img src="/media/maneskin-cover.jpg" style="width: 20px">
-                                <span class="text-truncate">Spotify</span>
+                                <img src="/media/profile-picture.jpg" style="width: 20px">
+                                <span class="text-truncate">Miss Beaver</span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                               <li><a class="dropdown-item" href="login.html">Account <span><i class="bi bi-box-arrow-up-right"></i></span></a></li>
                               <li><a class="dropdown-item" href="#">Profile</a></li>
                               <li><a class="dropdown-item" href="finish.html">Log-out</a></li>
-                              <li><a class="dropdown-item effect" type="button" href="#" data-bs-toggle="modal" data-bs-target="#albumModal">Song List</a></li>
-                              <li><a class="dropdown-item effect" type="button" href="#" onclick="countUnique()">Unique</a></li>
                             </ul>
         
                         </div>
             </nav>
-
-
+            <!-- good morning time js
+            hover play button transition js,, gradient-->
 
         </div>
 
@@ -305,7 +286,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hello-card d-flex rounded">
+                    <div class="hello-card d-flex rounded" id="playcard">
                         <img class="img-fluid rounded-start" src="/media/homepage/artist_1.jpg" alt="max richter">
                         <div class="hello-card-content d-flex align-items-center w-100">
                             <p>Max Richter</p>
@@ -341,7 +322,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hello-card d-none d-xl-flex rounded">
+                    <div class="hello-card d-none d-xl-flex rounded" id="playcard">
                         <img class="img-fluid rounded-start" src="/media/homepage/artist_10.jpg" alt="llorca album">
                         <div class="hello-card-content d-flex align-items-center w-100">
                             <p>Måneskin</p>
@@ -886,8 +867,7 @@
                   </h5>
                 </div>
                 <div class="d-flex justify-content-around align-items-center">
-                  <div style="font-size: small;"><output id="rangevalue">0:00</output> 
-                    <!-- <audio src="#"></audio> -->
+                  <div style="font-size: small;"><output id="rangevalue">0:00</output> <audio src="/media/music.mp3"></audio>
                     </div>
                   <div class="slide-container-music px-1" style="margin-top:0px;">
                     <input type="range" min="0" max="100" value="0" class="slider timeline" id="music-track" ontimeupdate="rangevalue.value=value"/>
@@ -987,69 +967,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
     crossorigin="anonymous"></script>
-    <script>
 
-/*
-Here is some code to use to attach anchor tags:
-
-For artist
-<a href="./artist.html?artistId=${HERE YOU ADD PROPER CODE FOR YOU DATA}">
-for example newObj.artist.id
-For album
-<a href="./album.html?albumId="${HERE YOU ADD PROPER CODE FOR YOU DATA}">"
-for example newObj.album.id
-
-*/
-const fetchData = () => {
-  const row = document.querySelector(".hello-content");
-  for (let i = 0; i < row.children.length; i++) {
-    fetch("https://striveschool-api.herokuapp.com/api/deezer/search?q=eminem")
-      .then((response) => response.json())
-      .then((data) => {
-        const index = Math.floor(Math.random() * data.data.length);
-        const newObj = data.data[index];
-        const cover = newObj.album.cover;
-        const albumID = newObj.album.id
-        const artistID = newObj.artist.id
-        const helloCard = document.getElementsByClassName("hello-card");
-        helloCard[i].firstElementChild.src = cover;
-        helloCard[i].querySelector("p").innerText = newObj.album.title;
-        const urlAlbum =  `./album.html?albumId=${albumID}`
-        const urlArtist =  `./artist.html?artistId=${artistID}`
-        const modal = document.querySelector(".modal-body");
-        const title = document.createElement("p");
-        title.innerText = newObj.title;
-        modal.append(title);
-        addListener(helloCard[i].firstElementChild, urlAlbum)
-        addListener(helloCard[i], urlArtist)
-      })
-      .catch((err) => console.log(err));
-  }
-};
-const addListener = (element, url) => {
-        element.addEventListener("click", ()=>{
-        helloCardInnerHTML = element.innerHTML
-        window.open(url, '_blank');
-    })
-}
-const countUnique = () => {
-  const result = [];
-  let count = 0;
-  const modal = document.querySelector(".modal-body");
-  for (let i = 0; i < modal.children.length; i++) {
-    const title = modal.children[i].innerText;
-    if (result.includes(title)) {
-      continue;
-    } else {
-      result.push(title);
-      count++;
-    }
-  }
-  alert(`There are ${count} unique songs displaying.`);
-};
-
-fetchData();
-    </script>
 </body>
 
 </html>
