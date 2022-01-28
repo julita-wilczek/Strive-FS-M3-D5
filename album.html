@@ -693,7 +693,7 @@
     // THIS IS IMPORTANT, KEEP IT!
     let id = new URLSearchParams(window.location.search)
 
-    fetch("https://striveschool-api.herokuapp.com/api/deezer/album/1121401", {
+    fetch("https://striveschool-api.herokuapp.com/api/deezer/album/" + id.get("albumId"), {
       "method": "GET"
     })
       .then(response => response.json())
