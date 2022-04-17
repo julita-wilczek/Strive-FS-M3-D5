@@ -19,8 +19,8 @@
 }
 body {
     font-family: 'DM Sans', sans-serif !important;
-    background-color: var(--bg-body);
-    color: var(--spotify-grey);
+    background-color: var(--bg-body)!important;
+    color: var(--spotify-grey)!important;
 }
 
 #top-nav{
